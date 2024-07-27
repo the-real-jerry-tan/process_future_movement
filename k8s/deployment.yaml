@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: process-future-movement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: process-future-movement
+  template:
+    metadata:
+      labels:
+        app: process-future-movement
+    spec:
+      containers:
+        - name: process-future-movement
+          image: process-future-movement:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Summary Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      cursor: pointer;
+      background-color: #f2f2f2;
+    }
+    th:hover {
+      background-color: #ddd;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+<h1>Daily Summary Report</h1>
+<table id="summary-table">
+  <thead>
+  <tr>
+    <th onclick="sortTable(0)">Client Information</th>
+    <th onclick="sortTable(1)">Product Information</th>
+    <th onclick="sortTable(2)">Total Transaction Amount</th>
+  </tr>
+  </thead>
+  <tbody id="summary-body">
+  <!-- Data rows will be inserted here -->
+  </tbody>
+</table>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    fetch('http://localhost:4200/api/get_daily_summary_report')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById('summary-body');
+        data.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+                            <td>${item.clientInformation}</td>
+                            <td>${item.productInformation}</td>
+                            <td>${item.totalTransactionAmount}</td>
+                        `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+
+  function sortTable(columnIndex) {
+    const table = document.getElementById('summary-table');
+    const rows = Array.from(table.rows).slice(1);
+    const isAsc = table.dataset.sortDirection === 'asc';
+    const direction = isAsc ? 1 : -1;
+    rows.sort((a, b) => {
+      const aText = a.cells[columnIndex].textContent.trim();
+      const bText = b.cells[columnIndex].textContent.trim();
+      return direction * aText.localeCompare(bText, undefined, {
+        numeric: true,
+        sensitivity: 'base'
+      });
+    });
+    table.dataset.sortDirection = isAsc ? 'desc' : 'asc';
+    rows.forEach(row => table.appendChild(row));
+  }
+</script>
+<app-root></app-root>
+
+</body>
+</html>

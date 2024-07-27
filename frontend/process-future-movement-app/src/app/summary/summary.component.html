@@ -1,0 +1,21 @@
+<div>
+  <input (input)="filter('clientInformation', ($event.target as HTMLInputElement).value)" placeholder="Filter by Client Information">
+  <input (input)="filter('productInformation', ($event.target as HTMLInputElement).value)" placeholder="Filter by Product Information">
+  <input (input)="filter('totalTransactionAmount', ($event.target as HTMLInputElement).value)" placeholder="Filter by Total Transaction Amount">
+</div>
+<table>
+  <thead>
+  <tr>
+    <th>Client Information</th>
+    <th>Product Information</th>
+    <th>Total Transaction Amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let summary of filteredSummaries">
+    <td>{{ summary.clientInformation }}</td>
+    <td>{{ summary.productInformation }}</td>
+    <td>{{ summary.totalTransactionAmount }}</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,20 @@
+<script src="../app.module.ts"></script>
+<div>
+  <h2>Daily Summary Report</h2>
+  <table>
+    <thead>
+    <tr>
+      <th (click)="sort('clientInformation')">Client Information</th>
+      <th (click)="sort('productInformation')">Product Information</th>
+      <th (click)="sort('totalTransactionAmount')">Total Transaction Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let summary of summaries">
+      <td>{{ summary["productInformation"] }}</td>
+      <td>{{ summary["productInformation"] }}</td>
+      <td>{{ summary["totalTransactionAmount"] }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

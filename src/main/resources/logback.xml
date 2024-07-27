@@ -1,0 +1,28 @@
+<configuration>
+    <!-- Console Appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <!-- Specify the log file path -->
+        <file>process_future_movement_ex.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="tan.jerry.process_future_movement" level="TRACE"/>
+    <logger name="org.springframework.batch" level="INFO"/>
+
+    <!-- Root Logger Configuration -->
+    <root level="info">
+        <!-- Attach appenders -->
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+</configuration>
